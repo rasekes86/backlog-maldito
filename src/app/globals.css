@@ -1,0 +1,388 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Custom arcade colors */
+  --color-arcade-black: #0d0d1a;
+  --color-neon-purple: #b026ff;
+  --color-neon-lime: #84ff00;
+  --color-ghost-white: #e8e6e3;
+  --color-dim-gray: #6b7280;
+  --color-arcade-dark: #13132b;
+  --color-arcade-surface: #1a1a35;
+  --color-neon-purple-dim: rgba(176, 38, 255, 0.15);
+  --color-neon-lime-dim: rgba(132, 255, 0, 0.1);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #0d0d1a;
+  --foreground: #e8e6e3;
+  --card: #13132b;
+  --card-foreground: #e8e6e3;
+  --popover: #1a1a35;
+  --popover-foreground: #e8e6e3;
+  --primary: #b026ff;
+  --primary-foreground: #0d0d1a;
+  --secondary: #1a1a35;
+  --secondary-foreground: #e8e6e3;
+  --muted: #1a1a35;
+  --muted-foreground: #6b7280;
+  --accent: #84ff00;
+  --accent-foreground: #0d0d1a;
+  --destructive: #ff4444;
+  --border: rgba(176, 38, 255, 0.2);
+  --input: rgba(176, 38, 255, 0.15);
+  --ring: #b026ff;
+  --chart-1: #b026ff;
+  --chart-2: #84ff00;
+  --chart-3: #ff6b35;
+  --chart-4: #00d4ff;
+  --chart-5: #ff3366;
+
+  /* Arcade-specific variables */
+  --arcade-black: #0d0d1a;
+  --neon-purple: #b026ff;
+  --neon-lime: #84ff00;
+  --ghost-white: #e8e6e3;
+  --dim-gray: #6b7280;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ========================================
+   CUSTOM ARCADE THEME UTILITIES
+   ======================================== */
+
+/* Pixel font class */
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
+}
+
+/* Neon text glow - Purple */
+.neon-text-purple {
+  color: #b026ff;
+  text-shadow:
+    0 0 7px #b026ff,
+    0 0 10px #b026ff,
+    0 0 21px #b026ff,
+    0 0 42px #8a1fd4,
+    0 0 82px #8a1fd4;
+}
+
+/* Neon text glow - Lime */
+.neon-text-lime {
+  color: #84ff00;
+  text-shadow:
+    0 0 7px #84ff00,
+    0 0 10px #84ff00,
+    0 0 21px #84ff00,
+    0 0 42px #5cb300,
+    0 0 82px #5cb300;
+}
+
+/* Pixel/retro styled button */
+.pixel-btn {
+  font-family: 'Press Start 2P', monospace;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  color: #0d0d1a;
+  background: #84ff00;
+  border: 3px solid #84ff00;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.15s ease;
+  box-shadow:
+    4px 4px 0 #5cb300,
+    0 0 15px rgba(132, 255, 0, 0.3);
+}
+
+.pixel-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    6px 6px 0 #5cb300,
+    0 0 25px rgba(132, 255, 0, 0.5);
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    2px 2px 0 #5cb300,
+    0 0 10px rgba(132, 255, 0, 0.2);
+}
+
+.pixel-btn-purple {
+  background: #b026ff;
+  border-color: #b026ff;
+  color: #e8e6e3;
+  box-shadow:
+    4px 4px 0 #8a1fd4,
+    0 0 15px rgba(176, 38, 255, 0.3);
+}
+
+.pixel-btn-purple:hover {
+  box-shadow:
+    6px 6px 0 #8a1fd4,
+    0 0 25px rgba(176, 38, 255, 0.5);
+}
+
+.pixel-btn-purple:active {
+  box-shadow:
+    2px 2px 0 #8a1fd4,
+    0 0 10px rgba(176, 38, 255, 0.2);
+}
+
+/* Retro card */
+.retro-card {
+  background: #13132b;
+  border: 2px solid rgba(176, 38, 255, 0.25);
+  border-radius: 8px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #b026ff, #84ff00);
+}
+
+/* Pixel divider */
+.pixel-divider {
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #b026ff 0px,
+    #b026ff 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  opacity: 0.6;
+}
+
+/* Arcade badge */
+.arcade-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.625rem;
+  color: #84ff00;
+  background: rgba(132, 255, 0, 0.08);
+  border: 1px solid rgba(132, 255, 0, 0.3);
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* Noise overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Scanlines effect */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 4px
+  );
+}
+
+/* Retro grid background */
+.retro-grid {
+  background-image:
+    linear-gradient(rgba(176, 38, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(176, 38, 255, 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Pulse glow animation */
+.pulse-glow-purple {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(176, 38, 255, 0.3), 0 0 10px rgba(176, 38, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(176, 38, 255, 0.5), 0 0 30px rgba(176, 38, 255, 0.2);
+  }
+}
+
+/* Glitch animation */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch {
+  animation: glitch 3s ease-in-out infinite;
+}
+
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg);
+  }
+  10% {
+    transform: skew(-2deg);
+  }
+  20% {
+    transform: skew(0deg);
+  }
+  30% {
+    transform: skew(3deg);
+  }
+  40% {
+    transform: skew(0deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  color: #84ff00;
+  z-index: -1;
+  animation: glitch 2s ease-in-out infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch-text::after {
+  color: #ff3366;
+  z-index: -2;
+  animation: glitch 2.5s ease-in-out infinite reverse;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b026ff44;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b026ff88;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(176, 38, 255, 0.4);
+  color: #e8e6e3;
+}

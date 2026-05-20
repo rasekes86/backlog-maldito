@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BACKLOG MALDITO</title>
+  <link rel="stylesheet" href="side_panel.css">
+</head>
+<body>
+  <!-- ═══ HEADER ═══ -->
+  <header class="bm-header">
+    <div class="bm-header-top">
+      <h1 class="bm-logo">BACKLOG<br><span>MALDITO</span></h1>
+      <div class="bm-header-badge">v1.2</div>
+    </div>
+    <nav class="bm-tabs">
+      <button class="bm-tab active" data-tab="radar">📡 Radar</button>
+      <button class="bm-tab" data-tab="backlog">🗃️ Backlog</button>
+      <button class="bm-tab" data-tab="creator">🎨 Creator</button>
+      <button class="bm-tab" data-tab="settings">⚙️ Settings</button>
+    </nav>
+  </header>
+
+  <main class="bm-main">
+
+    <!-- ═══ TAB: RADAR ═══ -->
+    <section id="tab-radar" class="bm-tab-content active">
+      <div class="bm-section-title">
+        <span class="bm-pixel-icon">📡</span> AÑADIR JUEGO AL BACKLOG
+      </div>
+
+      <!-- Game Name + RAWG Autocomplete -->
+      <div class="bm-field-group">
+        <label class="bm-label">Nombre del juego</label>
+        <div class="bm-autocomplete-wrap">
+          <input type="text" id="radar-game-name" class="bm-input" placeholder="Escribe el nombre..." autocomplete="off">
+          <div id="rawg-autocomplete" class="bm-autocomplete-dropdown hidden"></div>
+        </div>
+      </div>
+
+      <!-- Selected RAWG Game Preview -->
+      <div id="radar-rawg-preview" class="bm-rawg-preview hidden">
+        <div class="bm-rawg-preview-banner" id="radar-preview-banner">
+          <img id="radar-preview-img" src="" alt="">
+        </div>
+        <div class="bm-rawg-preview-info">
+          <h3 id="radar-preview-name">—</h3>
+          <div class="bm-rawg-preview-meta">
+            <span id="radar-preview-rating" class="bm-rating-badge">—</span>
+            <span id="radar-preview-metacritic" class="bm-metacritic-badge">—</span>
+            <span id="radar-preview-date">—</span>
+          </div>
+          <div id="radar-preview-genres" class="bm-genre-tags"></div>
+          <p id="radar-preview-desc" class="bm-rawg-preview-desc"></p>
+          <div id="radar-preview-platforms" class="bm-platform-badges"></div>
+        </div>
+      </div>
+
+      <!-- State -->
+      <div class="bm-field-group">
+        <label class="bm-label">Estado</label>
+        <select id="radar-state" class="bm-select">
+          <option value="pendiente">⏳ Pendiente</option>
+          <option value="jugando">🎮 Jugando</option>
+          <option value="completado">✅ Completado</option>
+          <option value="abandonado">💀 Abandonado</option>
+          <option value="oferta">🏷️ Oferta</option>
+        </select>
+      </div>
+
+      <!-- Platforms -->
+      <div class="bm-field-group">
+        <label class="bm-label">Plataformas</label>
+        <div id="radar-platforms" class="bm-toggle-grid">
+          <button class="bm-toggle-btn" data-platform="PC">🖥️ PC</button>
+          <button class="bm-toggle-btn" data-platform="PlayStation">🎮 PlayStation</button>
+          <button class="bm-toggle-btn" data-platform="Xbox">🟢 Xbox</button>
+          <button class="bm-toggle-btn" data-platform="Nintendo">🔴 Nintendo</button>
+          <button class="bm-toggle-btn" data-platform="Mobile">📱 Mobile</button>
+          <button class="bm-toggle-btn" data-platform="VR">🥽 VR</button>
+        </div>
+      </div>
+
+      <!-- Star Rating -->
+      <div class="bm-field-group">
+        <label class="bm-label">Tu valoración</label>
+        <div id="radar-stars" class="bm-star-rating">
+          <span class="bm-star" data-star="1">★</span>
+          <span class="bm-star" data-star="2">★</span>
+          <span class="bm-star" data-star="3">★</span>
+          <span class="bm-star" data-star="4">★</span>
+          <span class="bm-star" data-star="5">★</span>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="bm-field-group">
+        <label class="bm-label">Nota</label>
+        <textarea id="radar-note" class="bm-textarea" placeholder="Notas sobre este juego..." rows="3"></textarea>
+      </div>
+
+      <!-- Save Button -->
+      <button id="btn-save-game" class="bm-btn bm-btn-primary bm-btn-full">
+        💾 GUARDAR EN BACKLOG
+      </button>
+    </section>
+
+    <!-- ═══ TAB: BACKLOG ═══ -->
+    <section id="tab-backlog" class="bm-tab-content hidden">
+      <div class="bm-section-title">
+        <span class="bm-pixel-icon">🗃️</span> TU BACKLOG
+      </div>
+
+      <!-- Search -->
+      <div class="bm-search-wrap">
+        <input type="text" id="backlog-search" class="bm-input" placeholder="🔍 Buscar juego...">
+      </div>
+
+      <!-- Filters -->
+      <div class="bm-filter-row">
+        <button class="bm-filter-btn active" data-filter="all">Todos</button>
+        <button class="bm-filter-btn" data-filter="pendiente">Pendientes</button>
+        <button class="bm-filter-btn" data-filter="terror">Terror</button>
+        <button class="bm-filter-btn" data-filter="oferta">Ofertas</button>
+      </div>
+
+      <!-- Stats -->
+      <div id="backlog-stats" class="bm-stats-row">
+        <div class="bm-stat"><span class="bm-stat-num" id="stat-total">0</span><span class="bm-stat-label">Total</span></div>
+        <div class="bm-stat"><span class="bm-stat-num" id="stat-pending">0</span><span class="bm-stat-label">Pendiente</span></div>
+        <div class="bm-stat"><span class="bm-stat-num" id="stat-offers">0</span><span class="bm-stat-label">Ofertas</span></div>
+        <div class="bm-stat"><span class="bm-stat-num" id="stat-played">0</span><span class="bm-stat-label">Jugados</span></div>
+        <div class="bm-stat"><span class="bm-stat-num" id="stat-covers">0</span><span class="bm-stat-label">Covers</span></div>
+        <div class="bm-stat"><span class="bm-stat-num" id="stat-rating">—</span><span class="bm-stat-label">Avg</span></div>
+      </div>
+
+      <!-- Enrich All Button -->
+      <button id="btn-enrich-all" class="bm-btn bm-btn-enrich bm-btn-full">
+        🔄 Enriquecer todo con RAWG
+      </button>
+
+      <!-- Games List -->
+      <div id="backlog-games-list" class="bm-games-list">
+        <div class="bm-empty-state">
+          <div class="bm-empty-icon">👾</div>
+          <p>Tu backlog está vacío</p>
+          <p class="bm-empty-hint">Usa el Radar para añadir juegos o el botón morado en cualquier web</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TAB: CREATOR ═══ -->
+    <section id="tab-creator" class="bm-tab-content hidden">
+      <div class="bm-section-title">
+        <span class="bm-pixel-icon">🎨</span> CREADOR DE CONTENIDO
+      </div>
+
+      <!-- Game Selector -->
+      <div class="bm-field-group">
+        <label class="bm-label">Selecciona un juego</label>
+        <select id="creator-game-select" class="bm-select">
+          <option value="">— Selecciona un juego —</option>
+        </select>
+      </div>
+
+      <!-- Content Type Grid -->
+      <div class="bm-field-group">
+        <label class="bm-label">Tipo de contenido</label>
+        <div class="bm-content-grid">
+          <button class="bm-content-type-btn active" data-type="resumen">📝 Resumen</button>
+          <button class="bm-content-type-btn" data-type="tiktok">📱 TikTok</button>
+          <button class="bm-content-type-btn" data-type="seo">🔍 SEO</button>
+          <button class="bm-content-type-btn" data-type="hashtags">#️⃣ Hashtags</button>
+          <button class="bm-content-type-btn" data-type="portada">🖼️ Portada</button>
+          <button class="bm-content-type-btn" data-type="guion">🎬 Guión</button>
+          <button class="bm-content-type-btn" data-type="review">⭐ Review</button>
+          <button class="bm-content-type-btn" data-type="top5">🏆 Top 5</button>
+          <button class="bm-content-type-btn" data-type="thread">🧵 Thread X</button>
+        </div>
+      </div>
+
+      <!-- Platform for content -->
+      <div class="bm-field-group">
+        <label class="bm-label">Plataforma de destino</label>
+        <select id="creator-platform" class="bm-select">
+          <option value="general">🌐 General</option>
+          <option value="twitter">🐦 Twitter/X</option>
+          <option value="instagram">📷 Instagram</option>
+          <option value="tiktok">📱 TikTok</option>
+          <option value="youtube">▶️ YouTube</option>
+          <option value="twitch">🟣 Twitch</option>
+          <option value="blog">📝 Blog</option>
+        </select>
+      </div>
+
+      <!-- Generate Button -->
+      <button id="btn-generate" class="bm-btn bm-btn-primary bm-btn-full">
+        ⚡ GENERAR CONTENIDO
+      </button>
+
+      <!-- Content Result -->
+      <div id="creator-result" class="bm-creator-result hidden">
+        <div class="bm-creator-result-header">
+          <span id="creator-result-type" class="bm-result-badge">—</span>
+          <button id="btn-copy-content" class="bm-btn bm-btn-sm" title="Copiar">📋 Copiar</button>
+        </div>
+        <div id="creator-result-text" class="bm-creator-text"></div>
+      </div>
+
+      <!-- Content History Toggle -->
+      <div class="bm-field-group" style="margin-top: 16px;">
+        <button id="btn-toggle-history" class="bm-btn bm-btn-outline bm-btn-full">
+          📜 Ver historial de contenido
+        </button>
+      </div>
+
+      <!-- Content History -->
+      <div id="creator-history" class="bm-content-history hidden">
+        <div id="creator-history-list" class="bm-history-list"></div>
+        <button id="btn-clear-history" class="bm-btn bm-btn-danger bm-btn-full" style="margin-top: 8px;">
+          🗑️ Limpiar historial
+        </button>
+      </div>
+    </section>
+
+    <!-- ═══ TAB: SETTINGS ═══ -->
+    <section id="tab-settings" class="bm-tab-content hidden">
+      <div class="bm-section-title">
+        <span class="bm-pixel-icon">⚙️</span> CONFIGURACIÓN
+      </div>
+
+      <!-- Platforms -->
+      <div class="bm-field-group">
+        <label class="bm-label">Plataformas disponibles</label>
+        <div id="settings-platforms" class="bm-toggle-grid bm-toggle-grid-wide">
+          <button class="bm-toggle-btn active" data-platform="PC">🖥️ PC</button>
+          <button class="bm-toggle-btn active" data-platform="PlayStation">🎮 PlayStation</button>
+          <button class="bm-toggle-btn active" data-platform="Xbox">🟢 Xbox</button>
+          <button class="bm-toggle-btn active" data-platform="Nintendo">🔴 Nintendo</button>
+          <button class="bm-toggle-btn" data-platform="Mobile">📱 Mobile</button>
+          <button class="bm-toggle-btn" data-platform="VR">🥽 VR</button>
+          <button class="bm-toggle-btn" data-platform="Xbox Game Pass">🟢 Game Pass</button>
+          <button class="bm-toggle-btn" data-platform="PS Plus">🔵 PS Plus</button>
+        </div>
+      </div>
+
+      <!-- Genres -->
+      <div class="bm-field-group">
+        <label class="bm-label">Géneros favoritos</label>
+        <div id="settings-genres" class="bm-toggle-grid bm-toggle-grid-wide">
+          <button class="bm-toggle-btn active" data-genre="Acción">⚔️ Acción</button>
+          <button class="bm-toggle-btn active" data-genre="RPG">🧙 RPG</button>
+          <button class="bm-toggle-btn active" data-genre="Terror">👻 Terror</button>
+          <button class="bm-toggle-btn active" data-genre="Aventura">🗺️ Aventura</button>
+          <button class="bm-toggle-btn" data-genre="Estrategia">♟️ Estrategia</button>
+          <button class="bm-toggle-btn" data-genre="Puzzle">🧩 Puzzle</button>
+          <button class="bm-toggle-btn" data-genre="Deportes">⚽ Deportes</button>
+          <button class="bm-toggle-btn" data-genre="Carreras">🏎️ Carreras</button>
+          <button class="bm-toggle-btn" data-genre="Plataformas">🍄 Plataformas</button>
+          <button class="bm-toggle-btn" data-genre="Shooter">🔫 Shooter</button>
+          <button class="bm-toggle-btn" data-genre="Simulación">🏗️ Simulación</button>
+          <button class="bm-toggle-btn" data-genre="Indie">💎 Indie</button>
+          <button class="bm-toggle-btn" data-genre="Metroidvania">🦇 Metroidvania</button>
+          <button class="bm-toggle-btn" data-genre="Roguelike">💀 Roguelike</button>
+          <button class="bm-toggle-btn" data-genre="Survival">🏕️ Survival</button>
+          <button class="bm-toggle-btn" data-genre="Narrativa">📖 Narrativa</button>
+        </div>
+      </div>
+
+      <!-- Export -->
+      <div class="bm-field-group">
+        <label class="bm-label">Exportar / Importar</label>
+        <div class="bm-btn-row">
+          <button id="btn-export" class="bm-btn bm-btn-outline">📤 Exportar JSON</button>
+          <button id="btn-import" class="bm-btn bm-btn-outline">📥 Importar JSON</button>
+        </div>
+        <input type="file" id="import-file" accept=".json" class="hidden">
+      </div>
+
+      <!-- Clear -->
+      <div class="bm-field-group">
+        <button id="btn-clear-all" class="bm-btn bm-btn-danger bm-btn-full">
+          🗑️ BORRAR TODO EL BACKLOG
+        </button>
+      </div>
+
+      <!-- Info -->
+      <div class="bm-settings-info">
+        <p>BACKLOG MALDITO v1.2.0</p>
+        <p>Datos guardados en chrome.storage.local</p>
+        <p>API: <a href="https://rawg.io" target="_blank">RAWG.io</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ TOAST ═══ -->
+  <div id="bm-toast" class="bm-toast hidden">
+    <span id="bm-toast-text"></span>
+  </div>
+
+  <!-- ═══ CONFIRM DIALOG ═══ -->
+  <div id="bm-confirm-overlay" class="bm-confirm-overlay hidden">
+    <div class="bm-confirm-dialog">
+      <p id="bm-confirm-text">¿Estás seguro?</p>
+      <div class="bm-confirm-btns">
+        <button id="bm-confirm-yes" class="bm-btn bm-btn-danger">Sí</button>
+        <button id="bm-confirm-no" class="bm-btn bm-btn-outline">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="lib/storage.js"></script>
+  <script src="side_panel.js"></script>
+</body>
+</html>
