@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "BACKLOG MALDITO",
-  "version": "1.2.0",
-  "description": "Tu radar oscuro de videojuegos pendientes. Guarda, clasifica y crea contenido. Powered by RAWG.io",
+  "version": "1.3.0",
+  "description": "Tu radar oscuro de videojuegos pendientes. Guarda desde cualquier web, clasifica y crea contenido. Powered by RAWG.io",
   "author": "BACKLOG MALDITO",
   "icons": {
     "16": "assets/icon16.png",

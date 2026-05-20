@@ -104,7 +104,12 @@ function handleSaveFromFab(message, sender) {
 
     if (rawgData) {
       Object.keys(rawgData).forEach(function(key) {
-        game[key] = rawgData[key];
+        // Map RAWG rating to rawgRating to not overwrite user rating
+        if (key === 'rating') {
+          game.rawgRating = rawgData.rating;
+        } else {
+          game[key] = rawgData[key];
+        }
       });
     } else {
       game.enriched = false;

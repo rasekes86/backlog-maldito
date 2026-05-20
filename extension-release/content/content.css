@@ -1,16 +1,17 @@
-/* BACKLOG MALDITO — Content Script Styles v1.2.0 */
+/* BACKLOG MALDITO — Content Script Styles v1.3.0 */
 
+/* ─── FAB Button ─── */
 #bm-fab {
   position: fixed;
   bottom: 24px;
   right: 24px;
   z-index: 2147483647;
-  width: 52px;
-  height: 52px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: linear-gradient(135deg, #b026ff, #7a1ab3);
   border: 2px solid #84ff00;
-  box-shadow: 0 4px 16px rgba(176, 38, 255, 0.4), 0 0 0 0 rgba(132, 255, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(176, 38, 255, 0.5), 0 0 0 0 rgba(132, 255, 0, 0.3);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -21,8 +22,8 @@
 }
 
 #bm-fab:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 24px rgba(176, 38, 255, 0.6), 0 0 0 4px rgba(132, 255, 0, 0.15);
+  transform: scale(1.12);
+  box-shadow: 0 6px 28px rgba(176, 38, 255, 0.7), 0 0 0 6px rgba(132, 255, 0, 0.12);
 }
 
 #bm-fab:active {
@@ -37,17 +38,217 @@
 #bm-fab.bm-fab-saved {
   background: linear-gradient(135deg, #84ff00, #5cb300);
   border-color: #84ff00;
-  animation: bm-fab-pulse 0.5s ease;
+  animation: bm-pulse 0.5s ease;
 }
 
 #bm-fab .bm-fab-icon {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
 }
 
-@keyframes bm-fab-pulse {
+#bm-fab .bm-fab-spinner {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: bm-spin 0.6s linear infinite;
+  font-size: 0;
+}
+
+@keyframes bm-pulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  50% { transform: scale(1.25); }
   100% { transform: scale(1); }
+}
+
+@keyframes bm-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Save Popup ─── */
+.bm-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bm-fade-in 0.15s ease;
+  backdrop-filter: blur(4px);
+}
+
+.bm-popup {
+  background: #1a1a2e;
+  border: 2px solid #b026ff;
+  border-radius: 16px;
+  padding: 0;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 0 40px rgba(176, 38, 255, 0.35), 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: bm-popup-in 0.2s ease;
+  overflow: hidden;
+}
+
+.bm-popup-header {
+  background: linear-gradient(135deg, rgba(176, 38, 255, 0.2), rgba(132, 255, 0, 0.08));
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(176, 38, 255, 0.3);
+}
+
+.bm-popup-logo {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 800;
+  color: #84ff00;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.bm-popup-logo span {
+  color: #b026ff;
+}
+
+.bm-popup-body {
+  padding: 18px;
+}
+
+.bm-popup-label {
+  display: block;
+  font-size: 11px;
+  color: #8888aa;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.bm-popup-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: #0d0d1a;
+  border: 2px solid #2a2a50;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.bm-popup-input:focus {
+  border-color: #b026ff;
+  box-shadow: 0 0 0 3px rgba(176, 38, 255, 0.15);
+}
+
+.bm-popup-url {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #606078;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bm-popup-actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid rgba(42, 42, 80, 0.5);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.bm-popup-btn {
+  flex: 1;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.bm-popup-btn-cancel {
+  background: #1e1e3a;
+  color: #8888aa;
+  border: 1px solid #2a2a50;
+}
+
+.bm-popup-btn-cancel:hover {
+  background: #252550;
+  color: #a0a0b8;
+}
+
+.bm-popup-btn-save {
+  background: linear-gradient(135deg, #b026ff, #7a1ab3);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(176, 38, 255, 0.3);
+}
+
+.bm-popup-btn-save:hover {
+  box-shadow: 0 4px 16px rgba(176, 38, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.bm-popup-btn-save:active {
+  transform: translateY(0);
+}
+
+@keyframes bm-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bm-popup-in {
+  from { opacity: 0; transform: scale(0.92) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── Toast ─── */
+#bm-toast {
+  position: fixed;
+  bottom: 92px;
+  right: 24px;
+  z-index: 2147483647;
+  padding: 12px 18px;
+  background: #1a1a2e;
+  border: 1px solid #b026ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(176, 38, 255, 0.3), 0 8px 30px rgba(0, 0, 0, 0.4);
+  color: #e8e8f0;
+  font-size: 13px;
+  font-weight: 500;
+  max-width: 320px;
+  animation: bm-toast-in 0.25s ease;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.4;
+}
+
+#bm-toast.bm-toast-success {
+  border-color: #84ff00;
+}
+
+#bm-toast.bm-toast-error {
+  border-color: #ff2d55;
+}
+
+#bm-toast.bm-toast-out {
+  animation: bm-toast-out 0.3s ease forwards;
+}
+
+@keyframes bm-toast-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes bm-toast-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(10px) scale(0.95); }
 }
